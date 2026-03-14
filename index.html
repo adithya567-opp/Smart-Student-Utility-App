@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Student Utiliy Web App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Smart Student Utility Web App</h1>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#calculator">Grade Calculator</a></li>
+                <li><a href="#palindrome">Palindrome Checker</a></li>
+                <li><a href="#number">Number Analyzer</a></li>
+                <li><a href="#login">Login Validator</a></li>
+            </ul>
+            <button type="button" onclick="toggleMode()" class="btn">Toggle</button></button>
+        </nav>
+    </header>
+    <div class="hero" id="home">
+        <h2>All the tools you need to excel in your studies.</h2>
+    </div>
+    </div>
+    <section id="about">
+        <h2>About us</h2>
+        <p>The Smart Student Utility Web App is a simple yet powerful web application designed to provide useful student tools in one place.It combines practical utilities like a grade calculator, palindrome checker, number analyzer, and login validation into a clean, user-friendly interface.</p>
+    </section>
+    <section id="calculator">
+        <div class ="card">
+        <h2>Student Grade Calculator</h2>
+        <form>
+            <label for="sname">Student Name:</label>
+            <input type="text" id="sname" name="sname"><br>
+            <label for="math">Math Marks:</label>
+            <input type="number" id="math" name="math" min="0" max="100"><br>
+            <label for="physics">Physics Marks:</label>
+            <input type="number" id="physics" name="physics" min="0" max="100"><br>
+            <label for="chemistry">Chemistry Marks:</label>
+            <input type="number" id="chemistry" name="chemistry" min="0" max="100"><br>
+            <label for="computer">Computer Marks:</label>
+            <input type="number" id="computer" name="computer" min="0" max="100"><br>
+            <label for="english">English Marks:</label>
+            <input type="number" id="english" name="english" min="0" max="100"><br>
+            <button type="button" onclick="calculateGrade()">Calculate Result</button>
+            <button type="reset">Reset</button>
+            <button type="button" onclick="clearResult()">Clear Result</button>
+            <div id="result"></div>
+            <script>
+                function calculateGrade(){
+                let name= document.getElementById("sname").value;
+                let math = Number(document.getElementById("math").value);
+                let phy = Number(document.getElementById("physics").value);
+                let chem = Number(document.getElementById("chemistry").value);
+                let comp = Number(document.getElementById("computer").value);
+                let eng = Number(document.getElementById("english").value);
+
+                let marks = [math,phy,chem,comp,eng];
+                let total = 0;
+
+                for(let i=0; i<marks.length; i++)
+                {
+                    total += marks[i];
+                }
+
+                let average = total / 5;
+
+                let grade;
+                if(average >= 90) grade = "Aplus";
+                else if(average >=75) grade = "A";
+                else if(average >=60) grade = "B";
+                else if(average >=50) grade="C";
+                else grade = "Fail";
+
+                document.getElementById("result").innerHTML = `
+                Name: ${name}<br>
+                Total: ${total}<br>
+                Average: ${average.toFixed(2)}<br>
+                Grade:<span class="badge ${grade}">
+                 ${grade === "Aplus" ? "A+" : grade}
+                 </span>`
+                }
+                function clearResult(){
+                    document.getElementById("result").innerHTML=""; 
+                }
+            </script>
+        </form>
+        </div>
+    </section>
+    <section id="palindrome">
+        <div class ="card">
+        <h2>Palindrome Checker</h2>
+        <label for="word">Enter the word:</label>
+        <input type="text" id="word" name="word"><br>
+        <button type="button" onclick="checkPalindrome()">Check Palindrome</button>
+        <button onclick="resetPalindrome()">Reset</button>
+        <div id="palindromeResult"></div>
+        <script>
+            function checkPalindrome(){
+                let x = document.getElementById("word").value;
+                let y = x.toLowerCase();
+                let reverse ="";
+                for(let i =y.length-1; i>=0; i--){
+                    reverse += y[i];
+                }
+                let resultText = "Character Count: " + y.length + "<br>";
+                if(y == reverse){
+                    resultText += "It is a Palindrome";
+                }
+                else{
+                    resultText += "It is not a Palindrome";
+                }
+                document.getElementById("palindromeResult").innerHTML = resultText;
+            }
+            function resetPalindrome(){
+                document.getElementById("word").value ="";
+                document.getElementById("palindromeResult").innerHTML = "";
+            }
+        </script>
+        </div>
+    </section>
+    <section id="number">
+        <div class ="card">
+        <h2>Number Analyzer</h2>
+        <label for="no">Enter a Number:</label>
+        <input type="number" id="no" name="no"><br>
+        <button type="button" onclick="checkNumber()">Analyse Number</button>
+        <button onclick="resetNumber()">Reset</button>
+        <div id="numCheck"></div>
+        <script>
+            function checkNumber(){
+            let num = Number(document.getElementById("no").value);
+            let type;
+            if(num % 2==0){
+                type="Even";
+            }
+            else{
+                type="Odd";
+            }
+            let sign;
+            if(num > 0) sign ="Positive";
+            else if(num < 0) sign="Negative";
+            else{
+                sign="Zero";
+            }
+            let series="";
+            if(num > 0){
+                for(let i=1; i<=num; i++){
+                    series += i + " ";
+                }
+            }
+            else if(num < 0){
+                for(let i=1; i>=num; i--){
+                    series += i + " ";
+                }
+            }
+            else{
+                 series = "0";
+            }
+            document.getElementById("numCheck").innerHTML=`
+            Number: ${num}<br>
+            Type: ${type}<br>
+            Sign: ${sign}<br>
+            Series : ${series}`
+            ;
+            }
+            function resetNumber(){
+               document.getElementById("no").value = "";
+               document.getElementById("numCheck").innerHTML = "";
+            }
+        </script>
+        </div>
+    </section>
+    <section id="login">
+        <div class = "card">
+        <h2>Login Validator</h2>
+        <label for="user">Username:</label>
+        <input type="text" id="user" name="user"><br>
+        <label for="pass">Password::</label>
+        <input type="password" id="pass" name="pass"><br>
+        <button type="button" onclick="validateLogin()">Login</button>
+        <button onclick="resetLogin()">Reset</button>
+        <div id="validLogin"></div>
+        <script>
+            function validateLogin(){
+            let correctusername = "admin";
+            let correctpassword = "12345";
+
+            let enteredusername = document.getElementById("user").value;
+            let enteredpassword = document.getElementById("pass").value;
+
+            if(enteredusername === correctusername && enteredpassword === correctpassword){
+                document.getElementById("validLogin").innerHTML="Login Successful";
+            }else{
+                 document.getElementById("validLogin").innerHTML="Invalid Login";
+            }
+            }
+            function resetLogin(){
+            document.getElementById("user").value = "";
+            document.getElementById("pass").value = "";
+            document.getElementById("validLogin").innerHTML = "";
+            }
+        </script>
+        </div>
+    </section>
+    <script>
+    function toggleMode(){
+    document.body.classList.toggle("dark");
+    } 
+    </script>
+</body>
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-left">
+            <h3>Smart Student Utility Web App</h3>
+            <p>Helping students succeed with smart and simple tools.</p>
+        </div>
+
+        <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#calculator">Grade Calculator</a></li>
+                <li><a href="#palindrome">Palindrome Checker</a></li>
+                <li><a href="#number">Number Analyzer</a></li>
+                <li><a href="#login">Login Validator</a></li>
+            </ul>
+        </div>
+        <div class="footer-contact">
+            <h4>Contact</h4>
+            <p>Email: support@studentutility.com</p>
+
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+
+              <p>© 2026 Smart Student Utility Web App</p>
+            </div>
+        </div>
+    </div>
+</html>
